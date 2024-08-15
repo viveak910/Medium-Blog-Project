@@ -1,5 +1,5 @@
 import { Hono } from 'hono';
-import { PrismaClient } from '@prisma/client/extension';
+import { PrismaClient } from '@prisma/client/edge';
 import { withAccelerate } from '@prisma/extension-accelerate';
 import { decode,sign,verify} from 'hono/jwt';
 
@@ -25,7 +25,7 @@ app.post('/api/v1/signup', async (c) => {
     const jwt = await sign({ id: user.id }, c.env.JWT_SECRET);
 	return c.json({jwt})}
 	catch(e){
-		return c.json({"error":"while signing up"})
+		return c.json({"error":"while signing up"+e})
 	}
 })
 
@@ -46,12 +46,11 @@ app.post('/api/v1/signin', async (c) => {
 			return c.json({"error":"user not found"})
 		}
 		const jwt = await sign({id:user.id}, c.env.JWT_SECRET);
-		return c.json({jwt})
+		return c.json("Welcome back")
 	}
 	catch(e){
 		return c.json({"error":"while signing in"})
 	}
-
 })
 
 app.get('/api/v1/blog/:id', (c) => {

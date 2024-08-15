@@ -16,6 +16,7 @@ datasource db {
 model User {
   id        String   @id @default(uuid())
   email     String   @unique
+  password  String
   name      String?
   posts     Post[]
   createdAt DateTime @default(now())
