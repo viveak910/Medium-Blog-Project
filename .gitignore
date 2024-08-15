@@ -1,8 +1,9 @@
-node_modules
+# Node modules should not be included in version control
+node_modules/
+
 # Keep environment variables out of version control
 .env
 
+# Ignore SSH keys to keep them secure
 gitsshkey
 gitsshkey.pub
-
-
