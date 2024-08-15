@@ -9,6 +9,19 @@ const app = new Hono<{Bindings:{// Define the bindings to identify DATABASE_URL 
   JWT_SECRET:string
 }}>();
 
+app.use('/api/v1/blog/*', async (c, next) => {
+	const jwt = c.req.header('authorization');
+	if(!jwt){
+		return c.json({"error":"no jwt token"})
+	}
+	const token = jwt.split(' ')[1];
+	const payload = await verify(token, c.env.JWT_SECRET);
+	if(!payload){
+		return c.json({"error":"invalid token"})
+	}
+	
+	await next()
+  })
 app.post('/api/v1/signup', async (c) => {
 	const prisma = new PrismaClient({
     datasourceUrl: c.env.DATABASE_URL,
