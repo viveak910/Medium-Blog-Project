@@ -1,10 +1,10 @@
 
 import { Quote } from "../components/Quote"
-
+import { Auth } from "../components/Auth"   
 
 export const Signup = () => {
     return <div className="grid grid-cols-2">
-        <div>hello</div>
+            <Auth type = "signup"/>
         <div className="invisible md:visible">
             <Quote/>
         </div>
