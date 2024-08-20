@@ -1,12 +1,11 @@
 import { ChangeEvent, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { SignupInput, } from "@viveak910/common";
+import { SignupInput } from "@viveak910/common";
 import axios from "axios";
-import { BACKEND_URL } from "../../config";
+import { BACKEND_URL } from "../config";
 
 export const Auth = ({ type }: { type: "signup" | "signin" }) => {
     const navigate = useNavigate();
-
     const [postInputs, setPostInputs] = useState<SignupInput>({
         name: "",
         username: "",
@@ -15,20 +14,12 @@ export const Auth = ({ type }: { type: "signup" | "signin" }) => {
 
     async function sendRequest() {
         try {
-            
-
-
-            
-            const response = await axios.post(
-              `${BACKEND_URL}/api/v1/user/${type === "signup" ? "signup" : "signin"}`,
-              postInputs
-            );
-        
+            const response = await axios.post(`${BACKEND_URL}/api/v1/user/${type === "signup" ? "signup" : "signin"}`, postInputs);
             const jwt = response.data;
             localStorage.setItem("token", jwt);
-            navigate("/blog");
+            navigate("/blogs");
         } catch(e) {
-            alert("Error while signing up"+e);
+            alert("Error while signing up")
             // alert the user here that the request failed
         }
     }
@@ -54,7 +45,7 @@ export const Auth = ({ type }: { type: "signup" | "signin" }) => {
                             name: e.target.value
                         })
                     }} /> : null}
-                    <LabelledInput label="Username" placeholder="viveak910@gmail.com" onChange={(e) => {
+                    <LabelledInput label="Username" placeholder="viveak@gmail.com" onChange={(e) => {
                         setPostInputs({
                             ...postInputs,
                             username: e.target.value
